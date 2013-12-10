@@ -16,6 +16,11 @@ module RubyGame
         @player.move_up if button_down? Gosu::Button::KbUp
         @player.move_down if button_down? Gosu::Button::KbDown
         
+        @monster.move_left if @player.abs < @monster.abs
+        @monster.move_right if  @player.abs > @monster.abs
+        @monster.move_up if  @player.ord < @monster.ord
+        @monster.move_down if  @player.ord > @monster.ord
+        
         self.won! if @player.touch?(@ruby)
       end
     end
@@ -25,6 +30,7 @@ module RubyGame
       @font.draw("j00 Roxor!!", 180, 240, 2, 1.0, 1.0, 0xffffff00) if self.won?
       @ruby.draw
       @player.draw
+      @monster.draw
     end
     
     def start!
@@ -54,6 +60,11 @@ module RubyGame
     def ruby (ruby)
       @ruby = ruby
       @ruby.init_image(self)
+    end
+    
+    def monster (monster)
+      @monster = monster
+      @monster.init_image(self)
     end
     
   end

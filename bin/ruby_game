@@ -5,4 +5,5 @@ game = RubyGame::Game.new
 game.start! do |g|
   g.player RubyGame::Player.new(450, 350, 'nyan', 4)
   g.ruby RubyGame::Ruby.new(150, 350, 'ruby')
+  g.monster RubyGame::Monster.new(150, 150, 'undead', 3)
 end
