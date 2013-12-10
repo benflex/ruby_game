@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 require_relative '../lib/ruby_game'
 
-ruby = RubyGame::Ruby.new(150, 350, 'ruby')
-player = RubyGame::Player.new(450, 350, 'nyan', 4)
-game = RubyGame::Game.new(ruby, player)
-game.start!
+game = RubyGame::Game.new
+game.start! do |g|
+  g.player RubyGame::Player.new(450, 350, 'nyan', 4)
+  g.ruby RubyGame::Ruby.new(150, 350, 'ruby')
+end
