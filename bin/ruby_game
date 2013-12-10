@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require_relative '../lib/ruby_game'
 
-game = RubyGame::Game.new
+ruby = RubyGame::Ruby.new(50, 50, 'ruby.png')
+game = RubyGame::Game.new(ruby)
 game.start!
