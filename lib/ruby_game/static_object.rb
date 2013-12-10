@@ -9,11 +9,11 @@ module RubyGame
     end
     
     def init_image(window)
-      @img = Gosu::Image.new(window, File.join(IMAGES_PATH, @imgname), true)
+      @img = Gosu::Image.new(window, File.join(IMAGES_PATH, "#{@imgname}.png"), true)
     end
     
     def draw
-      @img.draw(@abs, @ord, 1)
+      @img.draw_rot(@abs, @ord, 1, 0)
     end
     
   end
