@@ -16,12 +16,11 @@ module RubyGame
         @player.move_up if button_down? Gosu::Button::KbUp
         @player.move_down if button_down? Gosu::Button::KbDown
         
-        @monster.move_left if @player.abs < @monster.abs
-        @monster.move_right if  @player.abs > @monster.abs
-        @monster.move_up if  @player.ord < @monster.ord
-        @monster.move_down if  @player.ord > @monster.ord
+        @monster.follow(@player)
+        #@monster.forward(@player)
         
         self.won! if @player.touch?(@ruby)
+        #self.lost! if @monster.touch?(@player)
       end
     end
     
