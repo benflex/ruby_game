@@ -26,7 +26,7 @@ module RubyGame
     
     def button_down(id)
       #self.close if id == Gosu::Button::KbEspace
-      self.start! if id == Gosu::Button::KbR
+      self.restart! if id == Gosu::Button::KbR
     end
     
     def draw
@@ -46,6 +46,8 @@ module RubyGame
       @state = :run
       self.show if block_given?
     end
+    
+    alias_method :restart!, :start!
     
     def won!
       @state = :won
