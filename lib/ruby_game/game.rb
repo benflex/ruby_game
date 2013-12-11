@@ -24,6 +24,11 @@ module RubyGame
       end
     end
     
+    def button_down(id)
+      #self.close if id == Gosu::Button::KbEspace
+      self.start! if id == Gosu::Button::KbR
+    end
+    
     def draw
       @background_image.draw(0, 0, 0)
       @font.draw("j00 Roxor!!", 180, 240, 2, 1.0, 1.0, 0xffffff00) if self.won?
@@ -33,30 +38,27 @@ module RubyGame
       @monster.draw
     end
     
-    def start!
-      yield(self)
+    def start!(&block)
+      if block_given? 
+        @block = block
+      end
+      @block.call(self)
       @state = :run
-      self.show
+      self.show if block_given?
     end
-    
-    def run?
-      @state == :run
-    end  
     
     def won!
       @state = :won
-    end
-    
-    def won?
-      @state == :won
     end
     
     def lost!
       @state = :lost
     end
     
-    def lost?
-      @state == :lost
+    %w(run won lost).each do |state|
+      define_method "#{state}?" do
+        @state == state.to_sym 
+      end
     end
     
     def player (player)
