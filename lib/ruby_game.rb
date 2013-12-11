@@ -8,4 +8,6 @@ require_relative "ruby_game/monster"
 module RubyGame
   ROOT_PATH = File.expand_path('../', File.dirname(__FILE__))
   IMAGES_PATH = File.join(ROOT_PATH, '/app/assets/images')
+  WIDTH = 640
+  HEIGHT = 480
 end

@@ -3,7 +3,7 @@ require 'gosu'
 module RubyGame
   class Game < Gosu::Window
     def initialize
-      super(640, 480, false)
+      super(WIDTH, HEIGHT, false)
       self.caption = "Ruby Game"
       @background_image = Gosu::Image.new(self, File.join(IMAGES_PATH, 'background.png'), true)
       @font = Gosu::Font.new(self, Gosu::default_font_name, 60)
@@ -20,13 +20,14 @@ module RubyGame
         #@monster.forward(@player)
         
         self.won! if @player.touch?(@ruby)
-        #self.lost! if @monster.touch?(@player)
+        self.lost! if @monster.touch?(@player)
       end
     end
     
     def draw
       @background_image.draw(0, 0, 0)
       @font.draw("j00 Roxor!!", 180, 240, 2, 1.0, 1.0, 0xffffff00) if self.won?
+      @font.draw("j00 Nubi!!!", 180, 240, 2, 1.0, 1.0, 0xffff0000) if self.lost?
       @ruby.draw
       @player.draw
       @monster.draw
@@ -36,7 +37,6 @@ module RubyGame
       yield(self)
       @state = :run
       self.show
-      
     end
     
     def run?
@@ -49,6 +49,14 @@ module RubyGame
     
     def won?
       @state == :won
+    end
+    
+    def lost!
+      @state = :lost
+    end
+    
+    def lost?
+      @state == :lost
     end
     
     def player (player)

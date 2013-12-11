@@ -7,6 +7,10 @@ module RubyGame
       @speed = speed
     end
   
+    def touch?(object)
+      @abs <= object.abs + 15 && @abs >= object.abs - 15  && @ord <= object.ord + 15 && @ord >= object.ord - 15 
+    end
+  
     def move_left
       @abs -= @speed unless @abs == 0
     end

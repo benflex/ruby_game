@@ -3,7 +3,7 @@ require_relative '../lib/ruby_game'
 
 game = RubyGame::Game.new
 game.start! do |g|
-  g.player RubyGame::Player.new(450, 350, 'nyan', 4)
-  g.ruby RubyGame::Ruby.new(150, 350, 'ruby')
-  g.monster RubyGame::Monster.new(150, 150, 'undead', 3)
+  g.player RubyGame::Player.new(RubyGame::WIDTH - 50, RubyGame::HEIGHT - 50, 'nyan', 4)
+  g.ruby RubyGame::Ruby.new(60, 100, 'ruby')
+  g.monster RubyGame::Monster.new('undead', 3)
 end
