@@ -16,11 +16,14 @@ module RubyGame
         @player.move_up if button_down? Gosu::Button::KbUp
         @player.move_down if button_down? Gosu::Button::KbDown
         
-        @monster.follow(@player)
+        @monsters.each do |m| 
+          m.follow(@player) 
+          self.lost! if m.touch?(@player)
+        end
         #@monster.forward(@player)
         
         self.won! if @player.touch?(@ruby)
-        self.lost! if @monster.touch?(@player)
+      
       end
     end
     
@@ -35,7 +38,7 @@ module RubyGame
       @font.draw("j00 Nubi!!!", 180, 240, 2, 1.0, 1.0, 0xffff0000) if self.lost?
       @ruby.draw
       @player.draw
-      @monster.draw
+      @monsters.each  { |m| m.draw }
     end
     
     def start!(&block)
@@ -70,6 +73,10 @@ module RubyGame
       end
     end
     
+    def monsters (monsters)
+      @monsters = monsters
+      @monsters.each { |m| m.init_image(self) }
+    end
 =begin    
     def player (player)
       @player = player
