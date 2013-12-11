@@ -5,5 +5,6 @@ game = RubyGame::Game.new
 game.start! do |g|
   g.player RubyGame::Player.new(RubyGame::WIDTH - 50, RubyGame::HEIGHT - 50, 'nyan', 4)
   g.ruby RubyGame::Ruby.new(60, 100, 'ruby')
-  g.monsters [RubyGame::Monster.new('undead', 3), RubyGame::Monster.new('ghost1', 2), RubyGame::Monster.new('cactuar', 1)]
+  #g.monsters [RubyGame::Monster.new(3), RubyGame::Monster.new(2), RubyGame::Monster.new(1)]
+  g.monsters Array.new(5) {RubyGame::Monster.new(rand(3))}
 end

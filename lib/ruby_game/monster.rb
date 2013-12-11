@@ -3,10 +3,10 @@ require_relative 'moving_object.rb'
 module RubyGame
   class Monster < MovingObject
     
-    def initialize(imgname, speed)
+    def initialize(speed)
       @abs = rand(0..WIDTH)
       @ord = rand(0..HEIGHT)
-      @imgname = imgname
+      @imgname = ["cactuar", "player", "ghost2", "undead"].sample
       @speed = speed
     end
     
