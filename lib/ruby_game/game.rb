@@ -61,6 +61,14 @@ module RubyGame
       end
     end
     
+    %w(player ruby monster).each do |o|
+      define_method o do |object|
+        instance_variable_set("@#{o}", object)
+        instance_variable_get("@#{o}").init_image(self)
+      end
+    end
+    
+=begin    
     def player (player)
       @player = player
       @player.init_image(self)
@@ -75,6 +83,6 @@ module RubyGame
       @monster = monster
       @monster.init_image(self)
     end
-    
+=end    
   end
 end
