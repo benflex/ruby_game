@@ -7,6 +7,7 @@ module RubyGame
       self.caption = "Ruby Game"
       @background_image = Gosu::Image.new(self, File.join(IMAGES_PATH, 'background.png'), true)
       @font = Gosu::Font.new(self, Gosu::default_font_name, 60)
+      
     end
     
     def update
@@ -17,7 +18,8 @@ module RubyGame
         @player.move_down if button_down? Gosu::Button::KbDown
         
         @monsters.each do |m| 
-          m.follow(@player) 
+          #m.follow(@player)
+          m.scripted_mov 
           self.lost! if m.touch?(@player)
         end
         #@monster.forward(@player)
@@ -45,7 +47,9 @@ module RubyGame
       if block_given? 
         @block = block
       end
-      @block.call(self)
+      @monsters = []
+      instance_eval(&@block)
+      #@block.call(self)
       @state = :run
       self.show if block_given?
     end
@@ -74,7 +78,7 @@ module RubyGame
     end
     
     def monsters (monsters)
-      @monsters = monsters
+      @monsters += monsters
       @monsters.each { |m| m.init_image(self) }
     end
 =begin    

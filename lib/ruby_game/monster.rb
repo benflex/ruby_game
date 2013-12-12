@@ -3,11 +3,16 @@ require_relative 'moving_object.rb'
 module RubyGame
   class Monster < MovingObject
     
-    def initialize(speed)
-      @abs = rand(0..WIDTH)
-      @ord = rand(0..HEIGHT)
+    attr_accessor :abs, :ord
+    
+    @@profiles = {}
+    
+    def initialize()
+      @abs = 0
+      @ord = 0
       @imgname = ["cactuar", "player", "ghost2", "undead"].sample
-      @speed = speed
+      #@speed = speed
+      @action = []
     end
     
     def follow(player)
@@ -23,6 +28,43 @@ module RubyGame
     def forward(player, speed = @speed)
       @abs += (player.abs <=> @abs) * speed
       @ord += (player.ord <=> @ord) * speed
+    end
+    
+    def scripted_mov()
+      dir = @action.first
+      self.send(dir.to_s)
+    end
+    
+    def self.define(type, &block)
+      m = Monster.new()
+      block.call(m)
+      @@profiles[type] = m
+      puts @@profiles.inspect
+    end
+    
+    def imgname(imgname)
+      @imgname = imgname
+    end
+    
+    def action(action, repeat)
+      repeat[:repeat].times do
+        @action[@action.length] = action
+      end
+    end
+    
+    def speed(speed)
+      @speed = speed
+    end
+    
+    def repos()
+      @abs = rand(0..WIDTH)
+      @ord = rand(0..HEIGHT)
+    end
+    
+    def self.build(type)
+      m = @@profiles[type].clone
+      m.repos
+      m
     end
     
   end
