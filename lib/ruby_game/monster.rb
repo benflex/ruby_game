@@ -1,4 +1,5 @@
 require_relative 'moving_object.rb'
+require 'awesome_print'
 
 module RubyGame
   class Monster < MovingObject
@@ -11,7 +12,7 @@ module RubyGame
       @abs = 0
       @ord = 0
       @imgname = ["cactuar", "player", "ghost2", "undead"].sample
-      #@speed = speed
+      @speed = 1
       @action = []
     end
     
@@ -48,6 +49,7 @@ module RubyGame
         #dir = @action_enum.next
         #dir = @action_enum.next
         self.send(dir.direction, dir.speed)
+        
       end
     end
     
@@ -55,7 +57,8 @@ module RubyGame
       m = Monster.new()
       block.call(m)
       @@profiles[type] = m
-      #puts @@profiles.inspect
+      ##ap @@profiles[type]
+      
     end
     
     def imgname(imgname)
@@ -65,7 +68,7 @@ module RubyGame
     def action(action, move)
       move[:speed] ||= @speed
       move[:repeat].times do
-        @action << Movement.new(action,move[:speed])
+        @action << Movement.new(action, move[:speed])
       end
     end
     
@@ -78,10 +81,16 @@ module RubyGame
       @ord = rand(0..HEIGHT)
     end
     
-    def self.build(type)
-      m = @@profiles[type].clone
-      m.repos
-      m
+    def self.build(type, count)
+      monsters = Array.new
+      count.times {monsters << @@profiles[type].clone}
+      monsters.each do |m|
+        m.repos
+      end
+      ## ultra élégant : appeler la methode correspondant au symbole sur chaque objet
+      #monsters.each(&:repos)
+      ##
+      monsters
     end
     
   end

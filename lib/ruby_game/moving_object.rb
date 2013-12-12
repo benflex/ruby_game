@@ -12,19 +12,19 @@ module RubyGame
     end
   
     def move_left(speed = @speed)
-      @abs -= @speed unless @abs <= 10
+      @abs -= speed unless @abs <= 10
     end
     
     def move_right(speed = @speed)
-      @abs += @speed unless @abs >= WIDTH - 10
+      @abs += speed unless @abs >= WIDTH - 10
     end
     
     def move_up(speed = @speed)
-      @ord -= @speed unless @ord <= 10
+      @ord -= speed unless @ord <= 10
     end
     
     def move_down(speed = @speed)
-      @ord += @speed unless @ord >= HEIGHT - 10
+      @ord += speed unless @ord >= HEIGHT - 10
     end
     
     def repos()

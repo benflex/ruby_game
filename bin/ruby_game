@@ -4,19 +4,20 @@ require_relative '../lib/ruby_game'
 RubyGame::Monster.define :ghost do |m|
   m.imgname "ghost1"
   m.speed 3
-  m.action :move_up, speed: 4, repeat: 40
+  m.action :move_up, speed: 20, repeat: 40
   m.action :move_down, repeat: 80
   
 end 
 
 RubyGame::Monster.define :undead do |m|
   m.imgname "undead"
+  m.speed 5
   m.action :move_up, repeat: 10
   m.action :move_right, repeat: 30
   m.action :move_down, repeat: 10
   m.action :move_left, repeat: 30
   m.action :follow, repeat: 10
-  m.speed 5
+  
 end
 
 RubyGame::Monster.define :knight do |m|
@@ -31,7 +32,9 @@ game.start! do
   player RubyGame::Player.new(RubyGame::WIDTH - 50, RubyGame::HEIGHT - 50, 'nyan', 4)
   ruby RubyGame::Ruby.new(60, 100, 'ruby')
   #monsters Array.new(5) {RubyGame::Monster.new(rand(3))}
-  monsters Array.new(2) {RubyGame::Monster.build(:ghost)}
-  monsters Array.new(1) {RubyGame::Monster.build(:knight)}
-  monsters Array.new(2) {RubyGame::Monster.build(:undead)}
+  monsters RubyGame::Monster.build(:ghost, 5)
+  monsters RubyGame::Monster.build(:knight, 1)
+  monsters RubyGame::Monster.build(:undead, 3)
+  #monsters Array.new(1) {RubyGame::Monster.build(:knight)}
+  #monsters Array.new(2) {RubyGame::Monster.build(:undead)}
 end
