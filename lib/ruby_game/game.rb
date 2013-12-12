@@ -19,7 +19,8 @@ module RubyGame
         
         @monsters.each do |m| 
           #m.follow(@player)
-          m.scripted_mov 
+          #m.scripted_mov 
+          m.execute
           self.lost! if m.touch?(@player)
         end
         #@monster.forward(@player)

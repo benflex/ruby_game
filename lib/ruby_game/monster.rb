@@ -15,6 +15,8 @@ module RubyGame
       @action = []
     end
     
+    Movement = Struct.new(:direction, :speed)
+    
     def follow(player)
       self.move_left if player.abs < @abs
       self.move_right if  player.abs > @abs
@@ -35,20 +37,29 @@ module RubyGame
       self.send(dir.to_s)
     end
     
+    def execute
+      @action_enum ||= @action.cycle #|| : si l'objet n'existe pas, jle crée
+      dir = @action_enum.next
+      #dir = @action_enum.next
+      #dir = @action_enum.next
+      self.send(dir.direction, dir.speed)
+    end
+    
     def self.define(type, &block)
       m = Monster.new()
       block.call(m)
       @@profiles[type] = m
-      puts @@profiles.inspect
+      #puts @@profiles.inspect
     end
     
     def imgname(imgname)
       @imgname = imgname
     end
     
-    def action(action, repeat)
-      repeat[:repeat].times do
-        @action[@action.length] = action
+    def action(action, move)
+      move[:speed] ||= @speed
+      move[:repeat].times do
+        @action << Movement.new(action,move[:speed])
       end
     end
     
