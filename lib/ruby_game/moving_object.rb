@@ -26,5 +26,13 @@ module RubyGame
     def move_down(speed = @speed)
       @ord += @speed unless @ord >= HEIGHT - 10
     end
+    
+    def repos()
+      @abs = rand(0..WIDTH)
+      @ord = rand(0..HEIGHT)
+    end
+    
+    alias_method :teleport, :repos
+    
   end
 end

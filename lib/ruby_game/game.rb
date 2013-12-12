@@ -17,10 +17,11 @@ module RubyGame
         @player.move_up if button_down? Gosu::Button::KbUp
         @player.move_down if button_down? Gosu::Button::KbDown
         
+        
         @monsters.each do |m| 
           #m.follow(@player)
           #m.scripted_mov 
-          m.execute
+          m.execute(@player)
           self.lost! if m.touch?(@player)
         end
         #@monster.forward(@player)
@@ -33,6 +34,7 @@ module RubyGame
     def button_down(id)
       #self.close if id == Gosu::Button::KbEspace
       self.restart! if id == Gosu::Button::KbR
+      @player.teleport if button_down?(Gosu::Button::KbSpace) && self.run?
     end
     
     def draw

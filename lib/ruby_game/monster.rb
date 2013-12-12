@@ -17,11 +17,11 @@ module RubyGame
     
     Movement = Struct.new(:direction, :speed)
     
-    def follow(player)
-      self.move_left if player.abs < @abs
-      self.move_right if  player.abs > @abs
-      self.move_up if  player.ord < @ord
-      self.move_down if  player.ord > @ord
+    def follow(player, speed = @speed)
+      self.move_left(speed) if player.abs < @abs
+      self.move_right(speed) if  player.abs > @abs
+      self.move_up(speed) if  player.ord < @ord
+      self.move_down(speed) if  player.ord > @ord
     end
     
     # plus élégant avec l'opérateur <=>
@@ -37,12 +37,18 @@ module RubyGame
       self.send(dir.to_s)
     end
     
-    def execute
+    def execute(player)
       @action_enum ||= @action.cycle #|| : si l'objet n'existe pas, jle crée
       dir = @action_enum.next
-      #dir = @action_enum.next
-      #dir = @action_enum.next
-      self.send(dir.direction, dir.speed)
+      if dir.direction == :follow
+        self.send(:follow, player, dir.speed) 
+      elsif dir.direction == :teleport
+        self.send(:teleport)
+      else
+        #dir = @action_enum.next
+        #dir = @action_enum.next
+        self.send(dir.direction, dir.speed)
+      end
     end
     
     def self.define(type, &block)
